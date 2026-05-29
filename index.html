@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Allam & Basmala</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      overflow:hidden;
+      background:black;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:white;
+    }
+
+    video{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-2;
+    }
+
+    .overlay{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.45);
+      z-index:-1;
+    }
+
+    .login-box,
+    .main{
+      width:100%;
+      max-width:500px;
+      padding:20px;
+      text-align:center;
+    }
+
+    .login-box{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+      animation:fade 1s ease;
+    }
+
+    .login-box h1{
+      font-size:42px;
+    }
+
+    input{
+      padding:15px;
+      border:none;
+      border-radius:15px;
+      outline:none;
+      font-size:18px;
+      text-align:center;
+    }
+
+    button{
+      padding:15px;
+      border:none;
+      border-radius:15px;
+      background:#ff4d8d;
+      color:white;
+      font-size:18px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      transform:scale(1.05);
+      background:#ff2f78;
+    }
+
+    .main{
+      display:none;
+      animation:fade 1s ease;
+    }
+
+    .title{
+      font-size:45px;
+      margin-bottom:20px;
+      text-shadow:0 0 20px white;
+    }
+
+    .message{
+      font-size:20px;
+      margin-bottom:35px;
+      line-height:1.8;
+    }
+
+    .countdown{
+      display:flex;
+      justify-content:center;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    .box{
+      width:100px;
+      padding:20px 10px;
+      border-radius:20px;
+      background:rgba(255,255,255,0.12);
+      backdrop-filter:blur(10px);
+      box-shadow:0 0 15px rgba(255,255,255,0.2);
+    }
+
+    .number{
+      font-size:35px;
+      font-weight:bold;
+    }
+
+    .label{
+      margin-top:10px;
+      font-size:15px;
+    }
+
+    .heart{
+      position:absolute;
+      color:#ff4d8d;
+      font-size:20px;
+      animation:float 6s linear infinite;
+    }
+
+    @keyframes float{
+
+      from{
+        transform:translateY(100vh) scale(0);
+        opacity:1;
+      }
+
+      to{
+        transform:translateY(-10vh) scale(1.5);
+        opacity:0;
+      }
+
+    }
+
+    @keyframes fade{
+
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+    }
+
+    @media(max-width:600px){
+
+      .title{
+        font-size:32px;
+      }
+
+      .message{
+        font-size:17px;
+      }
+
+      .box{
+        width:80px;
+      }
+
+      .number{
+        font-size:28px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- فيديو الخلفية -->
+
+  <video autoplay muted loop>
+    <source src="https://cdn.coverr.co/videos/coverr-clouds-and-pink-sky-1564836354558?download=1080p" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+  <!-- صفحة الباسورد -->
+
+  <div class="login-box" id="loginBox">
+
+    <h1>💖 Welcome 💖</h1>
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Enter Password"
+    >
+
+    <button onclick="checkPassword()">
+      Enter
+    </button>
+
+  </div>
+
+  <!-- الصفحة الأساسية -->
+
+  <div class="main" id="mainPage">
+
+    <div class="title">
+      💖 Allam & Basmala 💖
+    </div>
+
+    <div class="message">
+      Since 19/3/2025 ❤️
+      <br>
+      Every moment with you means everything...
+    </div>
+
+    <div class="countdown">
+
+      <div class="box">
+        <div class="number" id="days">0</div>
+        <div class="label">Days</div>
+      </div>
+
+      <div class="box">
+        <div class="number" id="hours">0</div>
+        <div class="label">Hours</div>
+      </div>
+
+      <div class="box">
+        <div class="number" id="minutes">0</div>
+        <div class="label">Minutes</div>
+      </div>
+
+      <div class="box">
+        <div class="number" id="seconds">0</div>
+        <div class="label">Seconds</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- الموسيقى -->
+
+  <audio autoplay loop>
+    <source src="https://files.catbox.moe/8jv0m5.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+
+    // الباسورد
+
+    const correctPassword = "19032025";
+
+    function checkPassword(){
+
+      const userPassword =
+        document.getElementById("password").value;
+
+      if(userPassword === correctPassword){
+
+        document.getElementById("loginBox").style.display = "none";
+
+        document.getElementById("mainPage").style.display = "block";
+
+      }else{
+
+        alert("Wrong Password!");
+
+      }
+
+    }
+
+    // التاريخ
+
+    const targetDate =
+      new Date("March 19, 2025 00:00:00").getTime();
+
+    const counter = setInterval(() => {
+
+      const now = new Date().getTime();
+
+      const distance = targetDate - now;
+
+      const days =
+        Math.floor(distance / (1000 * 60 * 60 * 24));
+
+      const hours =
+        Math.floor(
+          (distance % (1000 * 60 * 60 * 24))
+          / (1000 * 60 * 60)
+        );
+
+      const minutes =
+        Math.floor(
+          (distance % (1000 * 60 * 60))
+          / (1000 * 60)
+        );
+
+      const seconds =
+        Math.floor(
+          (distance % (1000 * 60))
+          / 1000
+        );
+
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hours").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+      document.getElementById("seconds").innerHTML = seconds;
+
+      if(distance < 0){
+
+        clearInterval(counter);
+
+        document.querySelector(".countdown").innerHTML =
+          "<h1>💖 Forever Together 💖</h1>";
+
+      }
+
+    },1000);
+
+    // القلوب
+
+    function createHeart(){
+
+      const heart = document.createElement("div");
+
+      heart.classList.add("heart");
+
+      heart.innerHTML = "❤";
+
+      heart.style.left = Math.random() * 100 + "vw";
+
+      heart.style.fontSize =
+        Math.random() * 20 + 10 + "px";
+
+      heart.style.animationDuration =
+        Math.random() * 3 + 3 + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      },6000);
+
+    }
+
+    setInterval(createHeart,300);
+
+  </script>
+
+</body>
+  </html>
